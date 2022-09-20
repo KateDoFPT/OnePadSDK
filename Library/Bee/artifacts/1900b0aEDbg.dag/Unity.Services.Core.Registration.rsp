@@ -120,6 +120,8 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
+-r:"Assets/OnePadSDK_Window/PluginServer/x64/MessageLibrary.dll"
+-r:"Assets/OnePadSDK_Window/PluginServer/x64/SharedMemory.dll"
 -r:"C:/Program Files/Unity/Editor/2021.3.10f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
 -r:"C:/Program Files/Unity/Editor/2021.3.10f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
 -r:"C:/Program Files/Unity/Editor/2021.3.10f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
@@ -353,6 +355,14 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/Unity.Services.Core.Threading.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/log4net.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/MessageLibrary.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/SharedMemory.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/Xilium.CefGlue.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/log4net.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/MessageLibrary.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/SharedMemory.dll"
+-analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/Xilium.CefGlue.dll"
 "Library/PackageCache/com.unity.services.core@1.4.2/Runtime/Registration/AssemblyInfo.cs"
 "Library/PackageCache/com.unity.services.core@1.4.2/Runtime/Registration/CorePackageInitializer.cs"
 -langversion:9.0

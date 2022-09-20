@@ -54,6 +54,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\MessageLibrary.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\Xilium.CefGlue.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\SharedMemory.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\log4net.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\MessageLibrary.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\Xilium.CefGlue.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\log4net.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\SharedMemory.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.services.core@1.4.2\Runtime\Device\UserIdProviders\AndroidUtils.cs" />
@@ -355,6 +363,12 @@
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="MessageLibrary">
+      <HintPath>Assets\OnePadSDK_Window\PluginServer\x64\MessageLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="SharedMemory">
+      <HintPath>Assets\OnePadSDK_Window\PluginServer\x64\SharedMemory.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Editor\2021.3.10f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

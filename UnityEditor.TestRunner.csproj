@@ -54,6 +54,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\MessageLibrary.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\Xilium.CefGlue.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\SharedMemory.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\log4net.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\MessageLibrary.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\Xilium.CefGlue.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x64\log4net.dll" />
+    <Analyzer Include="C:\Users\ADMIN\OnePadSDK_Window-MacOS\Assets\OnePadSDK_Window\PluginServer\x86\SharedMemory.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.31\UnityEditor.TestRunner\GUI\TestListTreeView\TestTreeViewItem.cs" />
