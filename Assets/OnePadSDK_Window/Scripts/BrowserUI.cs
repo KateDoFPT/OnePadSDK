@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-namespace SimpleWebBrowser
+namespace OnePadSDK
 {
 
 

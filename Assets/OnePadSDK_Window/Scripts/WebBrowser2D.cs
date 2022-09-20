@@ -7,7 +7,7 @@ using MessageLibrary;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace SimpleWebBrowser
+namespace OnePadSDK
 {
     public class WebBrowser2D : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler,
         IPointerUpHandler

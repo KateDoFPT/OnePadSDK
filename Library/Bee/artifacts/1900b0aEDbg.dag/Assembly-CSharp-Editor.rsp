@@ -375,14 +375,6 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/log4net.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/MessageLibrary.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/SharedMemory.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x64/Xilium.CefGlue.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/log4net.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/MessageLibrary.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/SharedMemory.dll"
--analyzer:"Assets/OnePadSDK_Window/PluginServer/x86/Xilium.CefGlue.dll"
 "Assets/OnePadSDK_Window/Editor/BrowserPostBuild.cs"
 -langversion:9.0
 

@@ -3,34 +3,24 @@ using MessageLibrary;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SimpleWebBrowser {
+namespace OnePadSDK {
     public class WebBrowser : MonoBehaviour {
         #region General
 
         [Header("General settings")]
-        public int Width = 1024;
-        public int Height = 768;
-        public string MemoryFile = "MainSharedMem";
-        public bool SwapVericalAxis = false;
-        public bool SwapHorisontalAxis = false;
-        public bool RandomMemoryFile = true;
-        public string InitialURL = "http://www.google.com";
-        public string StreamingResourceName = string.Empty;
-
-        public bool EnableWebRTC;
-
-        [Header("Testing")] public bool EnableGPU;
-
-        [Multiline] public string JSInitializationCode = "";
+        int Width = 320;
+        int Height = 50;
+        string MemoryFile = "MainSharedMem";
+        bool SwapVericalAxis = false;
+        bool SwapHorisontalAxis = true;
+        bool RandomMemoryFile = true;
+        string InitialURL = "https://cdn.adtrue.com/one-sdk/ad320x50.html?utm_src=ias";
+        string StreamingResourceName = string.Empty;
+        bool EnableWebRTC = false;
+        bool EnableGPU = false;
+        string JSInitializationCode = "";
 
         #endregion
-
-        private DialogEventType _dialogEventType;
-        private string _dialogMessage = "";
-        private string _dialogPrompt = "";
-
-
-        private bool _focused;
         private string _jsQueryString = "";
 
 
@@ -39,43 +29,11 @@ namespace SimpleWebBrowser {
 
         private Material _mainMaterial;
 
-        //status - threading
-        private bool _setUrl;
-        private string _setUrlString = "";
-
-        //dialog states - threading
-        private bool _showDialog;
-
         //query - threading
         private bool _startQuery;
-
-        [SerializeField] public Canvas DialogCanvas;
-
-        [Header("Dialog settings")] [SerializeField]
-        public bool DialogEnabled;
-
-        [SerializeField] public InputField DialogPrompt;
-
-        [SerializeField] public Text DialogText;
-
-        public bool KeepUIVisible;
         public Camera MainCamera;
-
-
-        [Header("UI settings")] [SerializeField]
-        public BrowserUI mainUIPanel;
-
-        [SerializeField] public Button NoButton;
-
-        [SerializeField] public Button OkButton;
-
-
         private int posX;
         private int posY;
-
-        public bool UIEnabled = true;
-
-        [SerializeField] public Button YesButton;
 
         T Search<T>(string name) {
             var child = transform.Find(name);
@@ -84,27 +42,6 @@ namespace SimpleWebBrowser {
                 return component;
             }
             return default(T);
-        }
-        //why Unity does not store the links in package?
-        private void InitPrefabLinks() {
-            if (mainUIPanel == null) {
-                mainUIPanel = Search<BrowserUI>("MainUI");
-            }
-            
-            if (DialogEnabled) {
-                if (DialogCanvas == null)
-                    DialogCanvas = gameObject.transform.Find("MessageBox").gameObject.GetComponent<Canvas>();
-                if (DialogText == null)
-                    DialogText = DialogCanvas.transform.Find("MessageText").gameObject.GetComponent<Text>();
-                if (OkButton == null)
-                    OkButton = DialogCanvas.transform.Find("OK").gameObject.GetComponent<Button>();
-                if (YesButton == null)
-                    YesButton = DialogCanvas.transform.Find("Yes").gameObject.GetComponent<Button>();
-                if (NoButton == null)
-                    NoButton = DialogCanvas.transform.Find("No").gameObject.GetComponent<Button>();
-                if (DialogPrompt == null)
-                    DialogPrompt = DialogCanvas.transform.Find("Prompt").gameObject.GetComponent<InputField>();
-            }
         }
 
         private void Start() {
@@ -121,41 +58,17 @@ namespace SimpleWebBrowser {
             //run initialization
             if (JSInitializationCode.Trim() != "")
                 _mainEngine.RunJSOnce(JSInitializationCode);
-
-            if (UIEnabled) {
-                InitPrefabLinks();
-                if(mainUIPanel!=null)
-                mainUIPanel.InitPrefabLinks();
-            }
-
             if (MainCamera == null) {
                 MainCamera = Camera.main;
                 if (MainCamera == null)
                     Debug.LogError("Error: can't find main camera");
             }
 
-            
-
-
-            if (UIEnabled && mainUIPanel!=null) {
-                mainUIPanel.MainCanvas.worldCamera = MainCamera;
-                mainUIPanel.KeepUIVisible = KeepUIVisible;
-                if (!KeepUIVisible)
-                    mainUIPanel.Hide();
-            }
 
             //attach dialogs and querys
-            _mainEngine.OnJavaScriptDialog += _mainEngine_OnJavaScriptDialog;
             _mainEngine.OnJavaScriptQuery += _mainEngine_OnJavaScriptQuery;
-            _mainEngine.OnPageLoaded += _mainEngine_OnPageLoaded;
             _mainEngine.OnTextureObjectUpdated += OnTextureObjectUpdated;
             _mainEngine.StreamingResourceName = StreamingResourceName;
-
-
-            if (DialogEnabled && DialogCanvas!=null) {
-                DialogCanvas.worldCamera = MainCamera;
-                DialogCanvas.gameObject.SetActive(false);
-            }
 			var initCoroutine = _mainEngine.InitPlugin(Width, Height, MemoryFile, InitialURL, EnableWebRTC, EnableGPU);
             StartCoroutine(initCoroutine);
         }
@@ -164,11 +77,6 @@ namespace SimpleWebBrowser {
             _mainMaterial.SetTexture("_MainTex", newtexture);
             _mainMaterial.SetTextureScale("_MainTex", new Vector2(SwapHorisontalAxis ? -1 : 1,SwapVericalAxis ? -1 : 1));
             Debug.Log("texture object updated");
-        }
-
-        private void _mainEngine_OnPageLoaded(string url) {
-            _setUrl = true;
-            _setUrlString = url;
         }
 
         //make it thread-safe
@@ -181,73 +89,11 @@ namespace SimpleWebBrowser {
             _mainEngine.SendQueryResponse(response);
         }
 
-        private void _mainEngine_OnJavaScriptDialog(string message, string prompt, DialogEventType type) {
-            _showDialog = true;
-            _dialogEventType = type;
-            _dialogMessage = message;
-            _dialogPrompt = prompt;
-        }
-
-        private void ShowDialog() {
-            if (DialogEnabled) {
-                switch (_dialogEventType) {
-                    case DialogEventType.Alert: {
-                        DialogCanvas.gameObject.SetActive(true);
-                        OkButton.gameObject.SetActive(true);
-                        YesButton.gameObject.SetActive(false);
-                        NoButton.gameObject.SetActive(false);
-                        DialogPrompt.text = "";
-                        DialogPrompt.gameObject.SetActive(false);
-                        DialogText.text = _dialogMessage;
-                        break;
-                    }
-                    case DialogEventType.Confirm: {
-                        DialogCanvas.gameObject.SetActive(true);
-                        OkButton.gameObject.SetActive(false);
-                        YesButton.gameObject.SetActive(true);
-                        NoButton.gameObject.SetActive(true);
-                        DialogPrompt.text = "";
-                        DialogPrompt.gameObject.SetActive(false);
-                        DialogText.text = _dialogMessage;
-                        break;
-                    }
-                    case DialogEventType.Prompt: {
-                        DialogCanvas.gameObject.SetActive(true);
-                        OkButton.gameObject.SetActive(false);
-                        YesButton.gameObject.SetActive(true);
-                        NoButton.gameObject.SetActive(true);
-                        DialogPrompt.text = _dialogPrompt;
-                        DialogPrompt.gameObject.SetActive(true);
-                        DialogText.text = _dialogMessage;
-                        break;
-                    }
-                }
-
-                _showDialog = false;
-            }
-        }
-
-        #region Dialogs
-
-        public void DialogResult(bool result) {
-            if (DialogEnabled) {
-                DialogCanvas.gameObject.SetActive(false);
-                _mainEngine.SendDialogResponse(result, DialogPrompt.text);
-            }
-        }
-
-        #endregion
-
-
         // Update is called once per frame
         private void Update() {
             if (_mainEngine == null)
                 return;
             _mainEngine.UpdateTexture();
-
-
-            //Dialog
-            if (_showDialog) ShowDialog();
 
             //Query
             if (_startQuery) {
@@ -255,21 +101,6 @@ namespace SimpleWebBrowser {
                 if (OnJSQuery != null)
                     OnJSQuery(_jsQueryString);
             }
-
-            //Status
-            if (_setUrl) {
-                _setUrl = false;
-                if (UIEnabled && mainUIPanel!=null)
-                    mainUIPanel.UrlField.text = _setUrlString;
-            }
-
-            if (UIEnabled)
-                if (_focused && (mainUIPanel==null || !mainUIPanel.UrlField.isFocused)) //keys
-                {
-                    _mainEngine.ProcessKeyEvents();
-                }
-
-            _mainEngine.CheckMessage();
         }
 
         private void OnDisable() {
@@ -278,7 +109,7 @@ namespace SimpleWebBrowser {
         }
 
 
-        public event BrowserEngine.PageLoaded OnPageLoaded;
+        //public event BrowserEngine.PageLoaded OnPageLoaded;
 
         
 
@@ -291,40 +122,8 @@ namespace SimpleWebBrowser {
 
         #endregion
 
-        #region UI
-
-        public void OnNavigate() {
-            // MainUrlInput.isFocused
-            _mainEngine.SendNavigateEvent(mainUIPanel.UrlField.text, false, false);
-        }
-
-        public void RunJavaScript(string js) {
-            _mainEngine.SendExecuteJSEvent(js);
-        }
-
-        public void GoBackForward(bool forward) {
-            if (forward)
-                _mainEngine.SendNavigateEvent("", false, true);
-            else
-                _mainEngine.SendNavigateEvent("", true, false);
-        }
-
-        #endregion
-
 
         #region Events (3D)
-
-        private void OnMouseEnter() {
-            _focused = true;
-			if(UIEnabled && mainUIPanel != null)
-                mainUIPanel.Show();
-        }
-
-        private void OnMouseExit() {
-            _focused = false;
-			if(UIEnabled && mainUIPanel!=null)
-                mainUIPanel.Hide();
-        }
 
         private void OnMouseDown() {
             if (_mainEngine.Initialized) {

@@ -6,7 +6,7 @@ using System.IO;
 
 public class BrowserPostBuild
 {
-    [PostProcessBuildAttribute(1)]
+    [PostProcessBuild(1)]
     public static void OnPostprocessBuild(BuildTarget target, string path)
     {
         Debug.Log("Post Build:"+Path.GetDirectoryName(path));

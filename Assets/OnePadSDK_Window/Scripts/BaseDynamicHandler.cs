@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using SimpleWebBrowser;
+using OnePadSDK;
 using UnityEngine;
 
 public class BaseDynamicHandler : MonoBehaviour,IDynamicRequestHandler {

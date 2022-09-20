@@ -5,9 +5,10 @@ using System.IO;
 using System.Threading;
 using MessageLibrary;
 using UnityEngine;
+using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
 
-namespace SimpleWebBrowser
+namespace OnePadSDK
 {
     public interface IDynamicRequestHandler {
         string Request(string url, string query);
@@ -89,7 +90,7 @@ namespace SimpleWebBrowser
             return path.Replace("localhost", _localhostname);
         }
         public IEnumerator InitPlugin(int width, int height, string sharedfilename,string initialURL,bool enableWebRTC,bool enableGPU) {
-            _localhostname = WWW.EscapeURL(sharedfilename);
+            _localhostname = UnityWebRequest.EscapeURL(sharedfilename);
             initialURL = RedirectLocalhost(initialURL);
             _pollthread=new Thread(BackgroundPollThread);
             _pollthread.Start();
@@ -169,7 +170,7 @@ namespace SimpleWebBrowser
                     _pluginProcess.Start();
                     Initialized = false;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //log the file
                     Debug.Log("FAILED TO START SERVER FROM:" + PluginServerPath + @"\SharedPluginServer.exe");
@@ -198,7 +199,8 @@ namespace SimpleWebBrowser
                     _connected = true;
                     
                 }
-                catch (Exception e) {
+                catch (Exception)
+                {
                     if (_inCommServer != null) _inCommServer.Dispose();
                     if (_outCommServer != null) _outCommServer.Dispose();
                     _pluginProcess.Dispose();
@@ -517,7 +519,7 @@ namespace SimpleWebBrowser
                     }
 
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Debug.Log("Error reading from socket,waiting for plugin server to start...");
                 }
@@ -562,9 +564,6 @@ namespace SimpleWebBrowser
                         BrowserTexture.Apply();
                     }
                     _mainTexArray.ReleaseReadLock();
-                }
-                else {
-                    int i = 0;
                 }
             }
         }
